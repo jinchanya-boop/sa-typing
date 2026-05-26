@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sa Typing Adventure - เกมฝึกพิมพ์ดีดอวกาศ โรงเรียนสา</title>
+    <!-- Google Fonts: Kanit for energetic headers, Sarabun for readable body texts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Space Stars Background -->
+    <div class="stars-bg"></div>
+    <div class="twinkling"></div>
+
+    <div class="app-container">
+        <!-- TOP NAVIGATION BAR -->
+        <header class="game-header">
+            <div class="logo">
+                <span class="logo-emoji">🚀</span>
+                <div class="logo-text">
+                    <h1>Sa Typing Adventure</h1>
+                    <p>โรงเรียนสา ม.1 ฝึกพิมพ์พิชิตอวกาศ</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <button id="sound-toggle-btn" class="icon-btn" title="เปิด/ปิดเสียง">
+                    <span id="sound-icon">🔊</span>
+                </button>
+                <button id="teacher-mode-btn" class="secondary-btn btn-sm">
+                    <span>👨‍🏫 เมนูครูผู้สอน</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN SCREEN CONTAINER -->
+        <main class="main-screen">
+            
+            <!-- 1. START SCREEN (REGISTRATION) -->
+            <section id="start-screen" class="game-card active">
+                <div class="mascot-intro animate-bounce">
+                    <div class="owl-mascot">🦉🧑‍🚀</div>
+                    <div class="bubble">
+                        <h3>สวัสดีนักบินอวกาศ ม.1 โรงเรียนสา!</h3>
+                        <p>ผมคือ <strong>"Sa-Bot"</strong> นกฮูกนำทางอวกาศ มาร่วมฝึกพิมพ์เพื่อพิชิตภารกิจและท้าดวลบอสไปกับเรากันเถอะ!</p>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <h2>ลงทะเบียนนักบินอวกาศ</h2>
+                    <form id="register-form" onsubmit="event.preventDefault();">
+                        <div class="form-group">
+                            <label for="student-name">ชื่อ-นามสกุล หรือ เลขที่ (เช่น ม.1/1 เลขที่ 5)</label>
+                            <input type="text" id="student-name" required placeholder="พิมพ์ชื่อและเลขที่ของคุณตรงนี้..." autocomplete="off">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>เลือกตัวละครอวตารของคุณ</label>
+                            <div class="avatar-selector">
+                                <div class="avatar-option active" data-avatar="🧑‍🚀">🧑‍🚀</div>
+                                <div class="avatar-option" data-avatar="👽">👽</div>
+                                <div class="avatar-option" data-avatar="🤖">🤖</div>
+                                <div class="avatar-option" data-avatar="🐱">🐱</div>
+                                <div class="avatar-option" data-avatar="🦊">🦊</div>
+                                <div class="avatar-option" data-avatar="🐼">🐼</div>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="start-game-btn" class="primary-btn btn-lg w-full">
+                            <span>🚀 เข้าสู่ห้องบังคับการ!</span>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 2. GAME LOBBY (MODE SELECTION) -->
+            <section id="lobby-screen" class="game-card">
+                <div class="player-welcome-bar">
+                    <div class="player-info">
+                        <span id="lobby-avatar" class="large-avatar">🧑‍🚀</span>
+                        <div>
+                            <h3 id="lobby-username">นักบินนิรนาม</h3>
+                            <p>ระดับ: <span id="player-rank" class="rank-tag">เริ่มต้น 🌟</span></p>
+                        </div>
+                    </div>
+                    <div class="quick-stats">
+                        <div class="stat-box">
+                            <span class="label">คะแนนสะสม</span>
+                            <span id="player-total-score" class="val">0</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="label">พิมพ์เร็วสุด (WPM)</span>
+                            <span id="player-max-wpm" class="val">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="section-title">เลือกภารกิจการพิมพ์ 🛰️</h2>
+                
+                <div class="modes-grid">
+                    <!-- MODE 1 -->
+                    <div class="mode-card" data-mode="1">
+                        <div class="mode-icon">⌨️</div>
+                        <h3>1. ฝึกหาปุ่ม (Key Finder)</h3>
+                        <p>ค้นหาตำแหน่งตัวอักษรบนแป้นพิมพ์ มีระบบไฮไลต์ช่วยฝึกพิมพ์สัมผัสเริ่มต้น เหมาะกับผู้เริ่มต้น</p>
+                        <span class="difficulty easy">ง่ายมาก 🟢</span>
+                    </div>
+
+                    <!-- MODE 2 -->
+                    <div class="mode-card" data-mode="2">
+                        <div class="mode-icon">📝</div>
+                        <h3>2. พิมพ์คำหรรษา (Word Typing)</h3>
+                        <p>ฝึกพิมพ์คำสั้นๆ ทั้งภาษาไทย ภาษาอังกฤษ คำศัพท์น่ารู้ และชื่อเฉพาะประจำโรงเรียนสา จับเวลา 60 วินาที</p>
+                        <span class="difficulty medium">ปานกลาง 🟡</span>
+                    </div>
+
+                    <!-- MODE 3 -->
+                    <div class="mode-card" data-mode="3">
+                        <div class="mode-icon">🏆</div>
+                        <h3>3. แข่งขันจัดอันดับ (Tournament)</h3>
+                        <p>เก็บคะแนนเพื่อเข้าสู่ Top 5 Leaderboard ของห้องเรียน พิสูจน์ว่าใครคือราชาคีย์บอร์ดของโรงเรียนสา!</p>
+                        <span class="difficulty hard">ท้าทาย 🟠</span>
+                    </div>
+
+                    <!-- MODE 4 -->
+                    <div class="mode-card" data-mode="4">
+                        <div class="mode-icon">👾</div>
+                        <h3>4. ศึกชิงแชมป์ปะทะบอส (Boss Challenge)</h3>
+                        <p>ประจันหน้ากับบอสเอเลี่ยนคีย์บอร์ดมอนสเตอร์! พิมพ์ประโยคยาวเพื่อยิงเลเซอร์ปราบพวกมันให้ทันเวลา</p>
+                        <span class="difficulty boss">ระดับบอส 🔴</span>
+                    </div>
+
+                    <!-- MODE 5 (MARIO RELAX) -->
+                    <div class="mode-card" data-mode="5">
+                        <div class="mode-icon">🎮</div>
+                        <h3>5. พักผ่อนเก็บเหรียญ (Mario Jump)</h3>
+                        <p>มินิเกมกระโดดเก็บเหรียญสไตล์มาริโอ้ หลบหลีกสิ่งกีดขวางเพื่อผ่อนคลายกล้ามเนื้อนิ้วมือหลังซ้อมพิมพ์!</p>
+                        <span class="difficulty easy" style="background: rgba(6, 182, 212, 0.15); color: var(--secondary);">ผ่อนคลาย 🔵</span>
+                    </div>
+                </div>
+
+                <div class="lobby-footer">
+                    <button id="view-leaderboard-btn" class="secondary-btn w-full">
+                        <span>🏆 ดูตารางคะแนนเกียรติยศ (Top 5 Leaderboard)</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 3. GAMEPLAY SCREEN -->
+            <section id="gameplay-screen" class="game-card">
+                <!-- Game Header with Live Stats -->
+                <div class="gameplay-hud">
+                    <button id="quit-game-btn" class="danger-btn btn-sm">🚪 ออก</button>
+                    
+                    <div class="hud-center">
+                        <span id="game-mode-title" class="hud-mode-name">โหมดการเล่น</span>
+                        <div class="hud-stats-row">
+                            <div class="hud-stat"><span class="lbl">คะแนน</span> <span id="game-score" class="val">0</span></div>
+                            <div class="hud-stat"><span class="lbl">Combo</span> <span id="game-combo" class="val">0</span></div>
+                            <div class="hud-stat"><span class="lbl">WPM</span> <span id="game-wpm" class="val">0</span></div>
+                            <div class="hud-stat"><span class="lbl">แม่นยำ</span> <span id="game-accuracy" class="val">100%</span></div>
+                            <div class="hud-stat timer-stat"><span class="lbl">เวลา</span> <span id="game-timer" class="val">60s</span></div>
+                        </div>
+                    </div>
+
+                    <div class="hud-lang-toggle">
+                        <button id="lang-th-btn" class="lang-btn active">ไทย</button>
+                        <button id="lang-en-btn" class="lang-btn">EN</button>
+                    </div>
+                </div>
+
+                <!-- Active Gameplay Container with Telemetry Sidebar -->
+                <div class="gameplay-body" style="display: flex; gap: 16px; flex: 1; margin: 12px 0; min-height: 250px;">
+                    <!-- Active Gameplay Arena (70%) -->
+                    <div id="gameplay-arena" class="arena" style="flex: 7; margin: 0; position: relative;">
+                    <!-- Dynamic view injection from JS depending on mode -->
+                    
+                    <!-- Area A: Key Finder Mode View -->
+                    <div id="key-finder-arena" class="game-view-pane">
+                        <div class="instruction-bubble">
+                            กดปุ่มบนแป้นพิมพ์ให้ตรงกับตัวอักษรที่ปรากฏด้านล่างนี้!
+                        </div>
+                        <div class="large-letter-display">
+                            <span id="target-key-char" class="letter-pop">A</span>
+                        </div>
+                        <div class="helper-finger-guide">
+                            ใช้นิ้ว: <span id="finger-guide-text">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Area B: Word Typing & Tournament View -->
+                    <div id="word-typing-arena" class="game-view-pane">
+                        <div class="word-card-container">
+                            <div class="word-display-wrapper">
+                                <div id="word-preview-list" class="word-previews">
+                                    <!-- Previews will show upcoming words -->
+                                </div>
+                                <div id="current-word-display" class="word-active">
+                                    <!-- Dynamic character highlights (correct/incorrect) -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="typing-input-box">
+                            <input type="text" id="typing-input" placeholder="พิมพ์คำข้างบนนี้..." autocomplete="off">
+                        </div>
+                    </div>
+
+                    <!-- Area C: Boss Challenge View -->
+                    <div id="boss-challenge-arena" class="game-view-pane">
+                        <div class="boss-battleground">
+                            <!-- Hero Ship Section -->
+                            <div class="battle-unit hero-unit">
+                                <div class="hero-character">🚀</div>
+                                <div class="laser-gun"></div>
+                            </div>
+                            
+                            <!-- Laser Beams / FX Container -->
+                            <div id="fx-layer" class="battle-fx"></div>
+
+                            <!-- Boss Section -->
+                            <div class="battle-unit boss-unit">
+                                <div class="boss-health-bar">
+                                    <div class="hp-label">BOSS: คีย์บอร์ดมอนสเตอร์ 👾</div>
+                                    <div class="hp-track">
+                                        <div id="boss-hp-bar" class="hp-fill" style="width: 100%;"></div>
+                                    </div>
+                                    <div id="boss-hp-text" class="hp-text">100 / 100 HP</div>
+                                </div>
+                                <div id="boss-character" class="boss-sprite animate-float">👾</div>
+                            </div>
+                        </div>
+
+                        <!-- Sentence Prompt -->
+                        <div class="boss-sentence-card">
+                            <div class="instruction-lbl">พิมพ์ประโยคศักดิ์สิทธิ์นี้เพื่อยิงลำแสงทำลายบอส!</div>
+                            <div id="boss-sentence-display" class="sentence-text">
+                                <!-- Letters dynamically structured for highlight -->
+                            </div>
+                            <div class="boss-time-bar">
+                                <div id="boss-sentence-time-fill" class="time-fill" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Area D: Mario Relax Mode View -->
+                    <div id="mario-relax-arena" class="game-view-pane">
+                        <div class="instruction-bubble" style="background: rgba(6, 182, 212, 0.12); border-color: rgba(6, 182, 212, 0.3);">
+                            🎮 บังคับ: <strong>ซ้าย-ขวา / A-D</strong> เดินหน้า-ถอยหลัง | <strong>ขึ้น-ลง / W-S</strong> ไต่บันได 🪜 | <strong>Space / W / ขึ้น</strong> กระโดดเหินขึ้นตึกอิฐ 🧱
+                        </div>
+                        <div class="mario-canvas-wrapper" style="position: relative; margin: 10px 0; border: 2px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; background: rgba(0, 0, 0, 0.4); box-shadow: var(--shadow-neon-blue);">
+                            <canvas id="mario-canvas" width="650" height="200" style="display: block; cursor: pointer;"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Space Stats Hub Sidebar (30%) -->
+                <div class="stats-sidebar" style="flex: 3; background: rgba(13, 17, 39, 0.75); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 16px; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);">
+                        <div class="sidebar-section">
+                            <h4 style="font-family: var(--font-heading); color: var(--secondary); font-size: 0.95rem; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px;">📊 ข้อมูลพิมพ์ของฉัน (Personal Bests)</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.75rem;">
+                                <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.04);">
+                                    <div style="color: var(--text-muted); margin-bottom: 2px;">พิมพ์เร็วสูงสุด</div>
+                                    <div style="font-weight: bold; color: var(--secondary); font-size: 1.15rem;"><span id="side-my-wpm">0</span> WPM</div>
+                                </div>
+                                <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.04);">
+                                    <div style="color: var(--text-muted); margin-bottom: 2px;">แม่นยำสูงสุด</div>
+                                    <div style="font-weight: bold; color: var(--success); font-size: 1.15rem;"><span id="side-my-acc">0</span>%</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="sidebar-section" style="flex: 1; display: flex; flex-direction: column; min-height: 120px;">
+                            <h4 style="font-family: var(--font-heading); color: #ec4899; font-size: 0.95rem; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px;">🏆 ยานเพื่อนๆ ในห้อง (Class Live)</h4>
+                            <div style="flex: 1; overflow-y: auto; max-height: 200px;">
+                                <table style="width: 100%; font-size: 0.75rem; border-collapse: collapse; text-align: left;">
+                                    <thead style="color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.08);">
+                                        <tr>
+                                            <th style="padding: 4px;">อันดับ</th>
+                                            <th style="padding: 4px;">นักบิน</th>
+                                            <th style="padding: 4px; text-align: right;">คะแนน</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="side-leaderboard-tbody" style="color: var(--text-main);">
+                                        <!-- Dynamically populated from JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ON-SCREEN VIRTUAL KEYBOARD -->
+                <div class="keyboard-container">
+                    <div class="keyboard-header">
+                        <span>⌨️ แป้นพิมพ์เสมือนจริง (ไฮไลต์ตำแหน่งช่วยพิมพ์)</span>
+                        <div class="kbd-legend">
+                            <span class="legend-item"><span class="dot highlight-dot"></span> ปุ่มที่ต้องพิมพ์</span>
+                        </div>
+                    </div>
+                    <div id="virtual-keyboard" class="virtual-keyboard-layout">
+                        <!-- Keyboard Rows generated dynamically by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. LEADERBOARD SCREEN -->
+            <section id="leaderboard-screen" class="game-card">
+                <h2>🏆 หอเกียรติยศสูงสุด (Top 5 Leaderboard)</h2>
+                <p class="subtitle">คะแนนที่ดีที่สุดของนักบินอวกาศ ม.1 โรงเรียนสา ในห้องเรียนนี้</p>
+
+                <!-- Podium View for Top 3 -->
+                <div class="podium-container">
+                    <!-- 2nd Place -->
+                    <div class="podium-step step-2">
+                        <div class="podium-medal">🥈</div>
+                        <div class="podium-avatar" id="podium-2-avatar">🦊</div>
+                        <div class="podium-name" id="podium-2-name">นักบินส่องแสง</div>
+                        <div class="podium-score" id="podium-2-score">-- คะแนน</div>
+                        <div class="podium-base">อันดับ 2</div>
+                    </div>
+                    <!-- 1st Place -->
+                    <div class="podium-step step-1">
+                        <div class="podium-medal animate-bounce">👑🥇</div>
+                        <div class="podium-avatar" id="podium-1-avatar">🚀</div>
+                        <div class="podium-name" id="podium-1-name">สุดยอดนักพิมพ์</div>
+                        <div class="podium-score" id="podium-1-score">-- คะแนน</div>
+                        <div class="podium-base">อันดับ 1</div>
+                    </div>
+                    <!-- 3rd Place -->
+                    <div class="podium-step step-3">
+                        <div class="podium-medal">🥉</div>
+                        <div class="podium-avatar" id="podium-3-avatar">🤖</div>
+                        <div class="podium-name" id="podium-3-name">นิ้วสายฟ้า</div>
+                        <div class="podium-score" id="podium-3-score">-- คะแนน</div>
+                        <div class="podium-base">อันดับ 3</div>
+                    </div>
+                </div>
+
+                <!-- Table for remaining ranks -->
+                <div class="leaderboard-table-container">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>อันดับ</th>
+                                <th>นักเรียน</th>
+                                <th>โหมด</th>
+                                <th>คะแนน</th>
+                                <th>WPM</th>
+                                <th>ความแม่นยำ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-tbody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="leaderboard-actions">
+                    <button id="close-leaderboard-btn" class="secondary-btn w-full">
+                        <span>Lobby กลับหน้าหลัก</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 5. GAME OVER RESULT SCREEN -->
+            <section id="result-screen" class="game-card">
+                <div id="result-animation-box" class="result-header">
+                    <span class="victory-medal">🏆</span>
+                    <h2>จบการท้าทาย!</h2>
+                    <p id="result-status-text">ยอดเยี่ยมมาก นักบินผ่านภารกิจสำเร็จ!</p>
+                </div>
+
+                <div class="card-body">
+                    <div class="result-stats-grid">
+                        <div class="result-stat-card">
+                            <span class="label">คะแนนที่ได้</span>
+                            <span id="res-score" class="val color-pink">0</span>
+                        </div>
+                        <div class="result-stat-card">
+                            <span class="label">ความเร็วเฉลี่ย (WPM)</span>
+                            <span id="res-wpm" class="val color-cyan">0</span>
+                        </div>
+                        <div class="result-stat-card">
+                            <span class="label">ความแม่นยำ (%)</span>
+                            <span id="res-accuracy" class="val color-yellow">0%</span>
+                        </div>
+                        <div class="result-stat-card">
+                            <span class="label">คอมโบสูงสุด</span>
+                            <span id="res-max-combo" class="val color-green">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Rewards Star System -->
+                    <div class="star-rating">
+                        <h3>ดาวรางวัลเกียรติยศ</h3>
+                        <div id="star-rewards-container" class="stars-row">
+                            <span class="star-item">⭐</span>
+                            <span class="star-item">⭐</span>
+                            <span class="star-item">⭐</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-actions" style="flex-direction: column; gap: 8px;">
+                    <div style="display: flex; gap: 12px; width: 100%;">
+                        <button id="result-retry-btn" class="primary-btn w-full"><span>🔄 เล่นใหม่อีกครั้ง</span></button>
+                        <button id="result-lobby-btn" class="secondary-btn w-full"><span>🛰️ กลับหน้าหลัก (Lobby)</span></button>
+                    </div>
+                    <button id="result-mario-btn" class="primary-btn w-full" style="background: linear-gradient(135deg, #06b6d4, #10b981); box-shadow: 0 4px 15px rgba(6, 182, 212, 0.35);">
+                        <span>🎮 พักผ่อนกระโดดเก็บเหรียญ (Mario Jump)</span>
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- TEACHER DASHBOARD DIALOG MODAL -->
+        <div id="teacher-modal" class="modal-overlay">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h2>👨‍🏫 แผงควบคุมระบบสำหรับคุณครู</h2>
+                    <button id="close-teacher-btn" class="close-modal-btn">&times;</button>
+                </div>
+                
+                <!-- Password Gate -->
+                <div id="teacher-auth-zone" class="modal-body auth-body">
+                    <div class="teacher-mascot">🔒👨‍🏫</div>
+                    <h3>กรุณาป้อนรหัสผ่านเพื่อเข้าใช้งาน</h3>
+                    <p>เพื่อตรวจสอบคะแนน จัดการคำศัพท์ และนำข้อมูลออกไปใช้งานในชั้นเรียน</p>
+                    <div class="form-group w-full max-w-sm">
+                        <input type="password" id="teacher-password" placeholder="ใส่รหัสผ่าน (เริ่มต้น: krujinsa)..." class="text-center">
+                        <div class="auth-hint">คำแนะนำ: รหัสผ่านคือ <code>krujinsa</code></div>
+                    </div>
+                    <div class="auth-actions">
+                        <button id="teacher-login-btn" class="primary-btn">ยืนยันรหัสผ่าน</button>
+                        <button id="teacher-bypass-btn" class="secondary-btn">เข้าโดยไม่ต้องใส่รหัส (ด่วน)</button>
+                    </div>
+                </div>
+
+                <!-- Teacher Dashboard Control Panel -->
+                <div id="teacher-panel-zone" class="modal-body hidden">
+                    <div class="tab-controls">
+                        <button id="tab-scores-btn" class="tab-btn active">📊 ตารางคะแนนนักเรียน</button>
+                        <button id="tab-vocab-btn" class="tab-btn">📝 จัดการคำศัพท์เพิ่มเติม</button>
+                    </div>
+
+                    <!-- TAB 1: Student Scores -->
+                    <div id="tab-scores-content" class="tab-pane active">
+                        <div class="dashboard-controls">
+                            <button id="export-excel-btn" class="excel-btn">
+                                <span>📥 ส่งออกเป็น Excel (.CSV)</span>
+                            </button>
+                            <button id="reset-scores-btn" class="danger-btn">
+                                <span>🗑️ รีเซ็ตคะแนนทั้งหมด</span>
+                            </button>
+                        </div>
+                        <div class="table-scroll-container">
+                            <table class="teacher-table">
+                                <thead>
+                                    <tr>
+                                        <th>วันที่-เวลา</th>
+                                        <th>นักเรียน</th>
+                                        <th>ห้อง/เลขที่</th>
+                                        <th>โหมดการเล่น</th>
+                                        <th>คะแนน</th>
+                                        <th>WPM</th>
+                                        <th>ความแม่นยำ</th>
+                                        <th>ลบ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="teacher-scores-tbody">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: Custom Vocabulary -->
+                    <div id="tab-vocab-content" class="tab-pane">
+                        <h3>เพิ่มคำศัพท์หรือประโยคที่ใช้ในการสอน</h3>
+                        <p class="subtitle">คำศัพท์ที่คุณครูเพิ่มจะเข้าไปอยู่ในคลังคำศัพท์ของ "โหมดพิมพ์คำ" และ "โหมด Boss" โดยอัตโนมัติ เพื่อใช้ทดสอบนักเรียน</p>
+                        
+                        <div class="add-vocab-form">
+                            <div class="form-group flex-1">
+                                <label for="new-vocab-text">คำหรือประโยคใหม่</label>
+                                <input type="text" id="new-vocab-text" placeholder="เช่น โรงเรียนเวียงสา, Hello world..." autocomplete="off">
+                            </div>
+                            <div class="form-group w-36">
+                                <label for="new-vocab-lang">ภาษา</label>
+                                <select id="new-vocab-lang">
+                                    <option value="th">ภาษาไทย</option>
+                                    <option value="en">อังกฤษ (EN)</option>
+                                </select>
+                            </div>
+                            <button id="add-vocab-btn" class="primary-btn mt-6">
+                                <span>➕ เพิ่มคำ</span>
+                            </button>
+                        </div>
+
+                        <div class="vocab-lists-container">
+                            <div class="vocab-column">
+                                <h4>คำศัพท์ภาษาไทยปัจจุบัน 🇹🇭</h4>
+                                <ul id="vocab-th-list" class="vocab-scroll-list">
+                                    <!-- Populated by JS -->
+                                </ul>
+                            </div>
+                            <div class="vocab-column">
+                                <h4>คำศัพท์ภาษาอังกฤษปัจจุบัน 🇺🇸</h4>
+                                <ul id="vocab-en-list" class="vocab-scroll-list">
+                                    <!-- Populated by JS -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
